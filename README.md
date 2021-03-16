@@ -1,24 +1,66 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column     | Type   | Options     |
+| ---------- | ------ | ----------- |
+| nickname   | string | null: false |
+| email      | string | null: false |
+| password   | string | null: false |
+| name       | string | null: false |
+| name_kana  | string | null: false |
+| birthday   | string | null: false |
 
-* Ruby version
+### Association
 
-* System dependencies
+- has_many :items
+- has_many :orders
 
-* Configuration
+## items テーブル
 
-* Database creation
+| Column                  | Type       | Options           |
+| ----------------------- | ---------- | ----------------- |
+| item_name               | string     | null: false       |
+| item_info               | text       | null: false       |
+| item_category           | string     | null: false       |
+| item_status             | string     | null: false       |
+| item-shipping-fee       | string     | null: false       |
+| item_prefecture         | string     | null: false       |
+| item_scheduled_delivery | string     | null: false       |
+| item_price              | string     | null: false       |
+| user_id                 | references | foreign_key: true |
 
-* Database initialization
+### Association
 
-* How to run the test suite
+- belongs_to :user
+- has_one :order
 
-* Services (job queues, cache servers, search engines, etc.)
+## orders テーブル
 
-* Deployment instructions
+| Column  | Type       | Options       |
+| ------- | ---------- | ------------- |
+| user_id | references | foreign: true |
+| item_id | references | foreign: true |
 
-* ...
+### Association
+
+- belongs_to :user
+- belongs_to :item
+- has_one :address
+
+
+## addresses テーブル
+
+| Column       | Type   | Options     |
+| ------------ | ------ | ----------- |
+| post_code    | string | null: false |
+| prefecture   | string | null: false |
+| city         | string | null: false |
+| address      | string | null: false |
+| phone_number | string | null: false |
+
+### Association
+
+- belongs_to :order
+
+
