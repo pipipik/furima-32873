@@ -1,11 +1,9 @@
 class OrderAddress
   include ActiveModel::Model
-  attr_accessor :nickname, :email, :password, :last_name, :first_name, :last_name_kana, :first_name_kana, :birthday,
-                :image, :name, :info, :category_id, :status_id, :shipping_fee_id, :prefecture_id, :scheduled_delivery_id, :price, :user_id,
-                :post_code, :city, :address, :building_name, :phone_number, :order_id, :user_id, :item_id, :token
+  attr_accessor :post_code, :prefecture_id, :city, :address, :building_name, :phone_number, :order_id, :user_id, :item_id, :token
 
   with_options presence: true do
-    validates :city, :address, :token
+    validates :city, :address, :token, :user_id, :item_id
     with_options numericality: { other_than: 1 } do
       validates :prefecture_id
     end
