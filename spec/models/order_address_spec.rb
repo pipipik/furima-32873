@@ -2,7 +2,10 @@ require 'rails_helper'
 
 RSpec.describe OrderAddress, type: :model do
   before do
-    @order_address = FactoryBot.build(:order_address)
+    @user = FactoryBot.create(:user)
+    @item = FactoryBot.create(:item)
+    @order_address = FactoryBot.build(:order_address, user_id: @user.id, item_id: @item.id)
+    sleep 0.1
   end
 
   describe '商品購入' do
@@ -50,7 +53,13 @@ RSpec.describe OrderAddress, type: :model do
       it 'phone_numberが全角数字だと保存できないこと' do
         @order_address.phone_number = '０９０１２３４５６７８'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include('Phone number is not a number')
+        expect(@order_address.errors.full_messages).to include('Phone number is invalid')
+      end
+      it 'phone_numberが12桁以上では登録できないこと' do
+
+        @order_address.phone_number = '090123456789'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Phone number is invalid")
       end
       it "tokenが空では登録できないこと" do
         @order_address.token = nil
