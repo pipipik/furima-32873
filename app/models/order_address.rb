@@ -10,7 +10,7 @@ class OrderAddress
     with_options format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)" } do
       validates :post_code
     end
-    with_options format: { with: /\A\d{11}\z/ } do
+    with_options format: { with: /\A\d{10}$|^\d{11}\z/ } do
       validates :phone_number
     end
   end
